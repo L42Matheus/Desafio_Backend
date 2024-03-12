@@ -29,8 +29,8 @@ public class FilmService {
             }
 
             throw new RuntimeException("Lista vazia ou nula");
-
         }
 
+        throw new RuntimeException("Ocorreu um erro ao tentar chamar API externa!");
     }
 }
