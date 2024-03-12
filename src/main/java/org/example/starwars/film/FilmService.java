@@ -13,6 +13,6 @@ public class FilmService {
     private RestTemplate restTemplate;
 
     public List<Film> getAllFilms() {
-
+        String url = "https://swapi.info/api/films";
     }
 }
