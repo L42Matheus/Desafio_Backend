@@ -1,6 +1,7 @@
 package org.example.starwars.film;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -14,5 +15,7 @@ public class FilmService {
 
     public List<Film> getAllFilms() {
         String url = "https://swapi.info/api/films";
+
+        ResponseEntity<Film[]> response = restTemplate.getForEntity(url, Film[].class);
     }
 }
