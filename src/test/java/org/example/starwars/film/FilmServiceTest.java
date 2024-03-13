@@ -65,4 +65,24 @@ class FilmServiceTest {
         assertEquals("Lista vazia ou nula", exception.getMessage());
     }
 
+
+    @Test
+    public void testGetFilmsOfSaga() {
+        Film film1 = new Film();
+        film1.setTitle("Star Wars: Episode IV - A New Hope");
+
+        Film film2 = new Film();
+        film2.setTitle("Star Wars: Episode V - The Empire Strikes Back");
+
+        Film[] filmsArray = {film1, film2};
+        ResponseEntity<Film[]> responseEntity = new ResponseEntity<>(filmsArray, HttpStatus.OK);
+        when(restTemplate.getForEntity("https://swapi.info/api/films", Film[].class)).thenReturn(responseEntity);
+
+        List<Film> films = filmService.getFilmsOfSaga("Star Wars");
+
+        assertNotNull(films);
+        assertEquals(2, films.size());
+        assertTrue(films.stream().allMatch(film -> film.getTitle().contains("Star Wars")));
+    }
+
 }
