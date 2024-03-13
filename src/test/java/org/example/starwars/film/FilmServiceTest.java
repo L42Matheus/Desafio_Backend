@@ -12,6 +12,9 @@ class FilmServiceTest {
     @Mock
     private FilmService filmService;
 
+    @Mock
+    private RestTemplate restTemplate;
+
     @InjectMocks
     private FilmController filmController;
 
