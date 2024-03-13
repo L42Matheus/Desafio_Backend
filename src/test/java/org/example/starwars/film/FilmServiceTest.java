@@ -85,4 +85,18 @@ class FilmServiceTest {
         assertTrue(films.stream().allMatch(film -> film.getTitle().contains("Star Wars")));
     }
 
+    @Test
+    public void testGetDetailFilmById_Success() {
+        String filmId = "1";
+        String filmUrl = "https://swapi.info/api/films/" + filmId;
+        Film expectedFilm = new Film();
+
+        ResponseEntity<Film> responseEntity = new ResponseEntity<>(expectedFilm, HttpStatus.OK);
+        when(restTemplate.getForEntity(filmUrl, Film.class)).thenReturn(responseEntity);
+
+        Film film = filmService.getDetailFilmById(filmId);
+
+        assertNotNull(film);
+        assertEquals(expectedFilm, film);
+    }
 }
