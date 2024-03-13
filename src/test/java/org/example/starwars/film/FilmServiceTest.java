@@ -54,4 +54,16 @@ class FilmServiceTest {
 
 
     }
+
+    @Test
+    void getAllFilms_ThrowsRuntimeException_WhenApiResponseIsEmpty() {
+
+        ResponseEntity<Film[]> responseEntity = new ResponseEntity<>(new Film[0], HttpStatus.OK);
+        when(restTemplate.getForEntity("https://swapi.info/api/films", Film[].class)).thenReturn(responseEntity);
+
+        RuntimeException exception = assertThrows(RuntimeException.class, () -> filmService.getAllFilms());
+
+        assertEquals("Lista vazia ou nula", exception.getMessage());
+    }
+
 }
