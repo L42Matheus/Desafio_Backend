@@ -62,7 +62,7 @@ class FilmServiceTest {
 
         RuntimeException exception = assertThrows(RuntimeException.class, () -> filmService.getAllFilms());
 
-        assertEquals("Lista vazia ou nula", exception.getMessage());
+        assertEquals("Lista de filmes está vazia ou nula", exception.getMessage());
     }
 
 
