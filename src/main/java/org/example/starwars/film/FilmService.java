@@ -39,7 +39,8 @@ public class FilmService {
         throw new RuntimeException("Ocorreu um erro ao tentar chamar API externa!");
     }
 
-    public void updateFilmDesccription(int id, String description){
+    public void updateFilmDesccription(int id, String description) throws IllegalAccessException {
+        Film film = filmDatabase.get(id);
 
         if (film != null) {
             film.setOpeningCrawl(description);
