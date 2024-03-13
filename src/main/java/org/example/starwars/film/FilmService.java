@@ -64,4 +64,17 @@ public class FilmService {
             throw new RuntimeException("Não foi possível obter os filmes da saga " + saga);
         }
     }
+
+    public Film getDetailFilmById(String id) {
+
+        String filmUrl = URL + "/" + id;
+
+        ResponseEntity<Film> response = restTemplate.getForEntity(filmUrl, Film.class);
+
+        if (response.getStatusCode() == HttpStatus.OK) {
+            return response.getBody();
+        } else {
+            throw new RuntimeException("Não foi possível obter detalhes do filme com ID " + id);
+        }
+    }
 }
