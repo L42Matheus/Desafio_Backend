@@ -17,31 +17,30 @@ public class FilmService {
     @Autowired
     private RestTemplate restTemplate;
 
+    @Autowired
+    private FilmeRepository filmeRepository;
+
     private static final String URL = "https://swapi.info/api/films";
 
     private Map<String, Film> filmDatabase = new HashMap<>();
 
 
     public List<Film> getAllFilms() {
-
-
         ResponseEntity<Film[]> response = restTemplate.getForEntity(URL, Film[].class);
 
         if (response.getStatusCode() == HttpStatus.OK) {
             Film[] films = response.getBody();
 
             if (films != null && films.length > 0) {
-
+                filmeRepository.saveAll(Arrays.asList(films));
                 return Arrays.asList(films);
             }
-
-            throw new RuntimeException("Lista vazia ou nula");
+            throw new RuntimeException("Lista de filmes está vazia ou nula");
         }
-
         throw new RuntimeException("Ocorreu um erro ao tentar chamar API externa!");
     }
 
-    public void updateFilmDesccription(int id, String description) throws IllegalAccessException {
+    public void updateFilmDesccription(String id, String description) throws IllegalAccessException {
         Film film = filmDatabase.get(id);
 
         if (film != null) {
