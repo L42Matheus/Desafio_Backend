@@ -7,13 +7,18 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class FilmService {
 
     @Autowired
     private RestTemplate restTemplate;
+
+    private Map<Integer, Film> filmDatabase = new HashMap<>();
+
 
     public List<Film> getAllFilms() {
         String url = "https://swapi.info/api/films";
@@ -36,6 +41,12 @@ public class FilmService {
 
     public void updateFilmDesccription(int id, String description){
 
+        if (film != null) {
+            film.setOpeningCrawl(description);
+            filmDatabase.put(id, film);
+        }else {
+            throw new IllegalAccessException("Filme cocm ID " + id + " não encontrado.");
+        }
     }
 
 }
