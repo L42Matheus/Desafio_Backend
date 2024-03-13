@@ -12,6 +12,9 @@ class FilmServiceTest {
     @Mock
     private FilmService filmService;
 
+    @InjectMocks
+    private FilmController filmController;
+
     @Test
     void getAllFilms() {
 
