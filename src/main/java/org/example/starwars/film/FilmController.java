@@ -18,4 +18,15 @@ public class FilmController {
     public List<Film> getAllFilms(){
         return filmService.getAllFilms();
     }
+
+    @GetMapping("/saga/{saga}")
+    public ResponseEntity<List<Film>> getFilmsOfSaga(@PathVariable String saga) {
+        List<Film> films = filmService.getFilmsOfSaga(saga);
+        if (!films.isEmpty()) {
+            return ResponseEntity.ok(films);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
 }
