@@ -99,4 +99,17 @@ class FilmServiceTest {
         assertNotNull(film);
         assertEquals(expectedFilm, film);
     }
+
+    @Test
+    public void testGetDetailFilmById_Failure() {
+        String filmId = "999";
+        String filmUrl = "https://swapi.info/api/films/" + filmId;
+        ResponseEntity<Film> responseEntity = new ResponseEntity<>(HttpStatus.NOT_FOUND);
+
+        when(restTemplate.getForEntity(filmUrl, Film.class)).thenReturn(responseEntity);
+
+        RuntimeException exception = assertThrows(RuntimeException.class, () -> filmService.getDetailFilmById(filmId));
+
+        assertEquals("Não foi possível obter detalhes do filme com ID " + filmId, exception.getMessage());
+    }
 }
