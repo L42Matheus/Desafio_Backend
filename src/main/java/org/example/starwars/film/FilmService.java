@@ -33,4 +33,9 @@ public class FilmService {
 
         throw new RuntimeException("Ocorreu um erro ao tentar chamar API externa!");
     }
+
+    public void updateFilmDesccription(int id, String description){
+
+    }
+
 }
