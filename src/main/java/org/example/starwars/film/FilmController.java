@@ -8,13 +8,13 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("swapi/api")
+@RequestMapping("swapi/api/films")
 public class FilmController {
 
     @Autowired
     FilmService filmService;
 
-    @GetMapping("/films")
+    @GetMapping
     public List<Film> getAllFilms(){
         return filmService.getAllFilms();
     }
