@@ -17,13 +17,15 @@ public class FilmService {
     @Autowired
     private RestTemplate restTemplate;
 
-    private Map<Integer, Film> filmDatabase = new HashMap<>();
+    private static final String URL = "https://swapi.info/api/films";
+
+    private Map<String, Film> filmDatabase = new HashMap<>();
 
 
     public List<Film> getAllFilms() {
-        String url = "https://swapi.info/api/films";
 
-        ResponseEntity<Film[]> response = restTemplate.getForEntity(url, Film[].class);
+
+        ResponseEntity<Film[]> response = restTemplate.getForEntity(URL, Film[].class);
 
         if (response.getStatusCode() == HttpStatus.OK) {
             Film[] films = response.getBody();
