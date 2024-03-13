@@ -9,7 +9,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class FilmServiceTest {
 
-    @Mock
+    @InjectMocks
     private FilmService filmService;
 
     @Mock
