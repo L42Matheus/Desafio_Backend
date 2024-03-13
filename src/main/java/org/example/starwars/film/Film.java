@@ -1,12 +1,18 @@
 package org.example.starwars.film;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
 import lombok.Data;
 
 import java.util.List;
 
+@Entity
 @Data
 public class Film {
+
+    @Id
+    private Long id;
 
     @JsonProperty("episode_id")
     private String episodeId;
