@@ -36,6 +36,13 @@ class FilmServiceTest {
 
         List<Film> result = filmController.getAllFilms();
 
+        assertEquals(2, result.size());
+        assertEquals("4", result.get(0).getEpisodeId());
+        assertEquals("A New Hope", result.get(0).getTitle());
+        assertEquals("George Lucas", result.get(0).getDirector());
+        assertEquals("5", result.get(1).getEpisodeId());
+        assertEquals("The Empire Strikes Back", result.get(1).getTitle());
+        assertEquals("Irvin Kershner", result.get(1).getDirector());
 
 
     }
