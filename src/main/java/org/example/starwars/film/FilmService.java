@@ -10,6 +10,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
 public class FilmService {
@@ -51,4 +52,16 @@ public class FilmService {
         }
     }
 
+    public List<Film> getFilmsOfSaga(String saga) {
+        ResponseEntity<Film[]> response = restTemplate.getForEntity(URL, Film[].class);
+
+        if (response.getStatusCode() == HttpStatus.OK) {
+            List<Film> films = Arrays.asList(response.getBody());
+            return films.stream()
+                    .filter(film -> film.getTitle().contains(saga))
+                    .collect(Collectors.toList());
+        } else {
+            throw new RuntimeException("Não foi possível obter os filmes da saga " + saga);
+        }
+    }
 }
