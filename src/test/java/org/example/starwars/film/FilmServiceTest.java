@@ -1,8 +1,10 @@
 package org.example.starwars.film;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
@@ -10,6 +12,7 @@ import org.springframework.web.client.RestTemplate;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.when;
 
 class FilmServiceTest {
@@ -20,24 +23,34 @@ class FilmServiceTest {
     @Mock
     private RestTemplate restTemplate;
 
-    @InjectMocks
-    private FilmController filmController;
+
+    @BeforeEach
+    void setUp() {
+        MockitoAnnotations.openMocks(this);
+    }
 
     @Test
     void getAllFilms() {
-        ResponseEntity<Film[]> responseEntity = new ResponseEntity<>(new Film[0], HttpStatus.OK);
 
+        Film film1 = new Film();
+        film1.setEpisodeId("4");
+        film1.setTitle("A New Hope");
+        film1.setDirector("George Lucas");
+
+        Film film2 = new Film();
+        film2.setEpisodeId("5");
+        film2.setTitle("The Empire Strikes Back");
+        film2.setDirector("Irvin Kershner");
+
+        Film[] filmsArray = { film1, film2 };
+        ResponseEntity<Film[]> responseEntity = new ResponseEntity<>(filmsArray, HttpStatus.OK);
         when(restTemplate.getForEntity("https://swapi.info/api/films", Film[].class)).thenReturn(responseEntity);
 
-        List<Film> result = filmController.getAllFilms();
+        List<Film> films = filmService.getAllFilms();
 
-        assertEquals(2, result.size());
-        assertEquals("4", result.get(0).getEpisodeId());
-        assertEquals("A New Hope", result.get(0).getTitle());
-        assertEquals("George Lucas", result.get(0).getDirector());
-        assertEquals("5", result.get(1).getEpisodeId());
-        assertEquals("The Empire Strikes Back", result.get(1).getTitle());
-        assertEquals("Irvin Kershner", result.get(1).getDirector());
+        assertEquals(2, films.size());
+        assertTrue(films.contains(film1));
+        assertTrue(films.contains(film2));
 
 
     }
