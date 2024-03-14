@@ -20,8 +20,6 @@ public class FilmService {
 
     private static final String URL = "https://swapi.info/api/films";
 
-    private Map<String, Film> filmDatabase = new HashMap<>();
-
     @PostConstruct
     public void init() {
         loadFilmsIntoMemory();
