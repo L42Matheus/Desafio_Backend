@@ -2,6 +2,7 @@ package org.example.starwars.film;
 
 import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -18,7 +19,8 @@ public class FilmService {
     @Autowired
     private FilmeRepository filmeRepository;
 
-    private static final String URL = "https://swapi.info/api/films";
+    @Value("${baseurl}")
+    private String baseurl;
 
     @PostConstruct
     public void init() {
@@ -26,7 +28,7 @@ public class FilmService {
     }
 
     protected void loadFilmsIntoMemory() {
-        ResponseEntity<Film[]> response = restTemplate.getForEntity(URL, Film[].class);
+        ResponseEntity<Film[]> response = restTemplate.getForEntity(baseurl, Film[].class);
 
         if (response.getStatusCode() == HttpStatus.OK) {
             Film[] films = response.getBody();
