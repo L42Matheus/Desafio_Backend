@@ -37,17 +37,21 @@ ou
 
 Agora que o projeto está em execução, você pode acessar os endpoints da API usando ferramentas como Postman ou cURL:
 
-Atualizar Descrição de um Filme:
-PUT - http://localhost:8080/swapi/api/films/4/description
+[Link para a coleção do Postman](https://github.com/L42Matheus/Desafio_Backend/blob/master/SWAPI-STAR-WARS.postman_collection.json)
 
-Obter Lista de Filmes:
-GET - http://localhost:8080/swapi/api/films
+- **Atualizar Descrição de um Filme:**
+  - PUT - [http://localhost:8080/swapi/api/films/4/description](http://localhost:8080/swapi/api/films/4/description)
 
-Obter Detalhes de um Filme por ID:
-GET - http://localhost:8080/swapi/api/films/4
+- **Obter Lista de Filmes:**
+  - GET - [http://localhost:8080/swapi/api/films](http://localhost:8080/swapi/api/films)
 
-Obter Filmes de uma Saga Específica:
-GET - http://localhost:8080/swapi/api/films/saga/Revenge of the Sith
+- **Obter Detalhes de um Filme por ID:**
+  - GET - [http://localhost:8080/swapi/api/films/4](http://localhost:8080/swapi/api/films/4)
+
+- **Obter Filmes de uma Saga Específica:**
+  - GET - [http://localhost:8080/swapi/api/films/saga/Revenge%20of%20the%20Sith](http://localhost:8080/swapi/api/films/saga/Revenge%20of%20the%20Sith)
+
+
 
 
 **Testando a API**
