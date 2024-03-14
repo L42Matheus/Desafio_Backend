@@ -2,6 +2,7 @@ package org.example.starwars.film;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.ArgumentMatchers;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
@@ -21,6 +22,9 @@ class FilmServiceTest {
 
     @Mock
     private RestTemplate restTemplate;
+
+    @Mock
+    private FilmeRepository filmeRepository;
 
 
     @BeforeEach
@@ -75,9 +79,9 @@ class FilmServiceTest {
         film2.setTitle("Star Wars: Episode V - The Empire Strikes Back");
 
         Film[] filmsArray = {film1, film2};
-        ResponseEntity<Film[]> responseEntity = new ResponseEntity<>(filmsArray, HttpStatus.OK);
-        when(restTemplate.getForEntity("https://swapi.info/api/films", Film[].class)).thenReturn(responseEntity);
 
+        when(filmeRepository.findByTitleContainingIgnoreCase(ArgumentMatchers.anyString()))
+                .thenReturn(List.of(filmsArray));
         List<Film> films = filmService.getFilmsOfSaga("Star Wars");
 
         assertNotNull(films);
