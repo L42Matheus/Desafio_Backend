@@ -31,7 +31,7 @@ public class FilmService {
         loadFilmsIntoMemory();
     }
 
-    private void loadFilmsIntoMemory() {
+    protected void loadFilmsIntoMemory() {
         ResponseEntity<Film[]> response = restTemplate.getForEntity(URL, Film[].class);
 
         if (response.getStatusCode() == HttpStatus.OK) {
