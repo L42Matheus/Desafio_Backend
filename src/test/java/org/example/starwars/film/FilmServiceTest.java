@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
@@ -91,12 +92,11 @@ class FilmServiceTest {
 
     @Test
     public void testGetDetailFilmById_Success() {
-        String filmId = "1";
-        String filmUrl = "https://swapi.info/api/films/" + filmId;
+        Long filmId = 1L;
         Film expectedFilm = new Film();
+        expectedFilm.setId(filmId);
 
-        ResponseEntity<Film> responseEntity = new ResponseEntity<>(expectedFilm, HttpStatus.OK);
-        when(restTemplate.getForEntity(filmUrl, Film.class)).thenReturn(responseEntity);
+        when(filmeRepository.findById(filmId)).thenReturn(Optional.of(expectedFilm));
 
         Film film = filmService.getDetailFilmById(filmId);
 
@@ -106,11 +106,9 @@ class FilmServiceTest {
 
     @Test
     public void testGetDetailFilmById_Failure() {
-        String filmId = "999";
-        String filmUrl = "https://swapi.info/api/films/" + filmId;
-        ResponseEntity<Film> responseEntity = new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        Long filmId = 999L;
 
-        when(restTemplate.getForEntity(filmUrl, Film.class)).thenReturn(responseEntity);
+        when(filmeRepository.findById(filmId)).thenReturn(Optional.empty());
 
         RuntimeException exception = assertThrows(RuntimeException.class, () -> filmService.getDetailFilmById(filmId));
 
