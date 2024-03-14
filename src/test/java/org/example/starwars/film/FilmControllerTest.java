@@ -28,4 +28,25 @@ class FilmControllerTest {
         assertEquals(expectedFilms, actualFilms);
         Mockito.verify(mockFilmService).getAllFilms();
     }
+
+    @Test
+    public void testGetFilmsOfSaga_withExistingSaga_returnsFilms() throws Exception {
+        FilmService mockFilmService = Mockito.mock(FilmService.class);
+
+        String saga = "Skywalker";
+        List<Film> expectedFilms = new ArrayList<>();
+        expectedFilms.add(new Film());
+        Mockito.when(mockFilmService.getFilmsOfSaga(saga)).thenReturn(expectedFilms);
+
+        FilmController controller = new FilmController();
+        controller.filmService = mockFilmService;
+
+        ResponseEntity<List<Film>> response = controller.getFilmsOfSaga(saga);
+
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertEquals(expectedFilms, response.getBody());
+        Mockito.verify(mockFilmService).getFilmsOfSaga(saga);
+    }
+
+
 }
