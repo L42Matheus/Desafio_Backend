@@ -21,7 +21,6 @@ public class Film {
     private String producer;
     @JsonProperty("release_date")
     private String releaseDate;
-
     @Column(length = 2000)
     @JsonProperty("opening_crawl")
     private String openingCrawl;
@@ -37,6 +36,7 @@ public class Film {
     private List<String> species;
     private String created;
     private String edited;
+    private int version;
     private String url;
 
 }

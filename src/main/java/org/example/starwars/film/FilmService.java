@@ -7,11 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
+import java.util.*;
 
 @Service
 public class FilmService {
@@ -61,9 +57,10 @@ public class FilmService {
         Film film = filmeRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Não foi possível obter detalhes do filme com ID " + id));
 
-
         if (film != null) {
             film.setOpeningCrawl(description);
+            film.setEdited(new Date().toString());
+            film.setVersion(film.getVersion() + 1);
             filmeRepository.save(film);
         }else {
             throw new IllegalAccessException("Filme cocm ID " + id + " não encontrado.");
