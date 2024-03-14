@@ -57,12 +57,14 @@ public class FilmService {
         }
     }
 
-    public void updateFilmDesccription(String id, String description) throws IllegalAccessException {
-        Film film = filmDatabase.get(id);
+    public void updateFilmDesccription(Long id, String description) throws IllegalAccessException {
+        Film film = filmeRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Não foi possível obter detalhes do filme com ID " + id));
+
 
         if (film != null) {
             film.setOpeningCrawl(description);
-            filmDatabase.put(id, film);
+            filmeRepository.save(film);
         }else {
             throw new IllegalAccessException("Filme cocm ID " + id + " não encontrado.");
         }
