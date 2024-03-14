@@ -49,18 +49,12 @@ public class FilmService {
 
 
     public List<Film> getAllFilms() {
-        ResponseEntity<Film[]> response = restTemplate.getForEntity(URL, Film[].class);
-
-        if (response.getStatusCode() == HttpStatus.OK) {
-            Film[] films = response.getBody();
-
-            if (films != null && films.length > 0) {
-                filmeRepository.saveAll(Arrays.asList(films));
-                return Arrays.asList(films);
-            }
+        List<Film> films = filmeRepository.findAll();
+        if (!films.isEmpty()) {
+            return films;
+        } else {
             throw new RuntimeException("Lista de filmes está vazia ou nula");
         }
-        throw new RuntimeException("Ocorreu um erro ao tentar chamar API externa!");
     }
 
     public void updateFilmDesccription(String id, String description) throws IllegalAccessException {
