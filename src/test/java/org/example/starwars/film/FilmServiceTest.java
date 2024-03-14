@@ -141,4 +141,36 @@ class FilmServiceTest {
 
         assertEquals("Não foi possível obter detalhes do filme com ID " + filmId, exception.getMessage());
     }
+
+    @Test
+    void testUpdateFilmDescription_Success() {
+        Long filmId = 1L;
+        String description = "New description";
+        Film film = new Film();
+        film.setId(filmId);
+        film.setOpeningCrawl("Old description");
+
+        when(filmeRepository.findById(filmId)).thenReturn(Optional.of(film));
+        when(filmeRepository.save(film)).thenReturn(film);
+
+        assertDoesNotThrow(() -> filmService.updateFilmDesccription(filmId, description));
+        assertEquals(description, film.getOpeningCrawl());
+        verify(filmeRepository, times(1)).findById(filmId);
+        verify(filmeRepository, times(1)).save(film);
+    }
+
+    @Test
+    void testUpdateFilmDescription_Failure_FilmNotFound() {
+        Long filmId = 1L;
+        String description = "New description";
+
+        when(filmeRepository.findById(filmId)).thenReturn(Optional.empty());
+
+        RuntimeException exception = assertThrows(RuntimeException.class, () ->
+                filmService.updateFilmDesccription(filmId, description));
+
+        assertEquals("Não foi possível obter detalhes do filme com ID " + filmId, exception.getMessage());
+        verify(filmeRepository, times(1)).findById(filmId);
+        verify(filmeRepository, never()).save(any());
+    }
 }
