@@ -47,8 +47,9 @@ class FilmServiceTest {
         film2.setDirector("Irvin Kershner");
 
         Film[] filmsArray = { film1, film2 };
-        ResponseEntity<Film[]> responseEntity = new ResponseEntity<>(filmsArray, HttpStatus.OK);
-        when(restTemplate.getForEntity("https://swapi.info/api/films", Film[].class)).thenReturn(responseEntity);
+
+        when(filmeRepository.findAll())
+                .thenReturn(List.of(filmsArray));
 
         List<Film> films = filmService.getAllFilms();
 
