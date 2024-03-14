@@ -38,4 +38,14 @@ public class FilmController {
         }
     }
 
+    @PutMapping("{id}/description")
+    public ResponseEntity<String> updateFilmDescription(@PathVariable Long id, @RequestBody String description) {
+        try {
+            filmService.updateFilmDesccription(id, description);
+            return ResponseEntity.ok("Descrição do filme atualizada com sucesso.");
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
 }
