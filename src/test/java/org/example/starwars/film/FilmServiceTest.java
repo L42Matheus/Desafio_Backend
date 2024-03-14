@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -63,8 +64,7 @@ class FilmServiceTest {
     @Test
     void getAllFilms_ThrowsRuntimeException_WhenApiResponseIsEmpty() {
 
-        ResponseEntity<Film[]> responseEntity = new ResponseEntity<>(new Film[0], HttpStatus.OK);
-        when(restTemplate.getForEntity("https://swapi.info/api/films", Film[].class)).thenReturn(responseEntity);
+        when(filmeRepository.findAll()).thenReturn(Collections.emptyList());
 
         RuntimeException exception = assertThrows(RuntimeException.class, () -> filmService.getAllFilms());
 
