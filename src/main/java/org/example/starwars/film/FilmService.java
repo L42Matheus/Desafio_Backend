@@ -25,6 +25,27 @@ public class FilmService {
 
     private Map<String, Film> filmDatabase = new HashMap<>();
 
+    @PostConstruct
+    public void init() {
+        loadFilmsIntoMemory();
+    }
+
+    private void loadFilmsIntoMemory() {
+        ResponseEntity<Film[]> response = restTemplate.getForEntity(URL, Film[].class);
+
+        if (response.getStatusCode() == HttpStatus.OK) {
+            Film[] films = response.getBody();
+
+            if (films != null && films.length > 0) {
+                filmeRepository.saveAll(Arrays.asList(films));
+            } else {
+                throw new RuntimeException("Lista de filmes está vazia ou nula");
+            }
+        } else {
+            throw new RuntimeException("Ocorreu um erro ao tentar chamar a API externa!");
+        }
+    }
+
 
     public List<Film> getAllFilms() {
         ResponseEntity<Film[]> response = restTemplate.getForEntity(URL, Film[].class);
