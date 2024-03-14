@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.verify;
 
 class FilmControllerTest {
 
@@ -47,8 +48,44 @@ class FilmControllerTest {
 
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertEquals(expectedFilms, response.getBody());
-        Mockito.verify(mockFilmService).getFilmsOfSaga(saga);
+        verify(mockFilmService).getFilmsOfSaga(saga);
+    }
+
+    @Test
+    public void testGetFilmDetails_withExistingId_returnsFilm() throws Exception {
+        FilmService mockFilmService = Mockito.mock(FilmService.class);
+
+        Long id = 1L;
+        Film expectedFilm = new Film();
+        expectedFilm.setId(id);
+        Mockito.when(mockFilmService.getDetailFilmById(id)).thenReturn(expectedFilm);
+
+        FilmController controller = new FilmController();
+        controller.filmService = mockFilmService;
+        ResponseEntity<Film> response = controller.getFilmDetails(id);
+
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertEquals(expectedFilm, response.getBody());
+        verify(mockFilmService).getDetailFilmById(id);
     }
 
 
+
+    @Test
+    public void testUpdateFilmDescription_withValidData_returnsSuccess() throws Exception {
+        FilmService mockFilmService = Mockito.mock(FilmService.class);
+
+        Long id = 1L;
+        String description = "New description";
+        Mockito.doNothing().when(mockFilmService).updateFilmDesccription(id, description);
+
+        FilmController controller = new FilmController();
+        controller.filmService = mockFilmService;
+
+        ResponseEntity<String> response = controller.updateFilmDescription(id, description);
+
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertEquals("Descrição do filme atualizada com sucesso.", response.getBody());
+        verify(mockFilmService).updateFilmDesccription(id, description);
+    }
 }
