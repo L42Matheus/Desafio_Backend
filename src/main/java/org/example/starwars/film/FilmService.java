@@ -56,16 +56,8 @@ public class FilmService {
     public List<Film> getFilmsOfSaga(String saga) {
         return filmeRepository.findByTitleContainingIgnoreCase(saga);
     }
-    public Film getDetailFilmById(String id) {
-
-        String filmUrl = URL + "/" + id;
-
-        ResponseEntity<Film> response = restTemplate.getForEntity(filmUrl, Film.class);
-
-        if (response.getStatusCode() == HttpStatus.OK) {
-            return response.getBody();
-        } else {
-            throw new RuntimeException("Não foi possível obter detalhes do filme com ID " + id);
-        }
+    public Film getDetailFilmById(Long id) {
+        return filmeRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Não foi possível obter detalhes do filme com ID " + id));
     }
 }
